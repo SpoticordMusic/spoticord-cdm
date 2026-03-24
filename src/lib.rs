@@ -225,6 +225,7 @@ impl CdmInstance {
 
         unsafe { cdm_decrypted_block_data(decrypted, &mut data, &mut size) };
 
+        // TODO: We could potentially wrap the slice in a struct and only call free when that struct is dropped, which would save an extra allocation
         let plaintext = unsafe { std::slice::from_raw_parts(data, size as _).to_vec() };
 
         unsafe { cdm_decrypted_block_free(decrypted) };
